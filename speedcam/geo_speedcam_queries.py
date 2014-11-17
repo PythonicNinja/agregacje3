@@ -36,7 +36,6 @@ to_geo_json_points(
     json_name='speed_cams_near_gdansk.geojson')
 
 
-
 # speedcams in pomorskie
 to_geo_json_points(
     cursor=db.speedcam.find({
@@ -58,3 +57,21 @@ to_geo_json_points(
         }
     }),
     json_name='speed_cams_pomorskie.geojson')
+
+
+# speedcams route
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {'$geoIntersects':
+                    {'$geometry':
+                         {
+                             'type': "LineString",
+                             'coordinates': [
+                                 [52.64373, 19.19789],
+                                 [51.17473, 19.46548]
+                             ]
+                         }
+                    }
+        }
+    }),
+    json_name='speed_cams_route.geojson')
