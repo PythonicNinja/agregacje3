@@ -9,7 +9,7 @@ client = MongoClient()
 db = client.test
 
 
-def to_geo_json_points(cursor, json_name):
+def to_geo_json_points(cursor, json_name, type="Point"):
     geo_json = {
         "type": "FeatureCollection",
         "features": [
@@ -18,7 +18,7 @@ def to_geo_json_points(cursor, json_name):
                 "geometry":
                     {
                         "_id": str(point.get('speed')) + " " + str(point.get('loc')),
-                        "type": "Point",
+                        "type": type,
                         "coordinates": [point.get('loc')[1], point.get('loc')[0]]
                     }
             } for point in cursor
@@ -74,4 +74,6 @@ to_geo_json_points(
                     }
         }
     }),
-    json_name='speed_cams_route.geojson')
+    json_name='speed_cams_route.geojson',
+    type="LineString"
+)
