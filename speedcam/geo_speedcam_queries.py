@@ -28,7 +28,7 @@ def to_geo_json_points(cursor, json_name, type="Point"):
     with open(json_name, 'w') as out_json:
         json.dump(geo_json, out_json)
 
-# speedcams near 20 km from Gdansk
+# 1. speedcams near 20 km from Gdansk
 to_geo_json_points(
     cursor=db.speedcam.find({
         'loc': {
@@ -36,7 +36,7 @@ to_geo_json_points(
     json_name='speed_cams_near_gdansk.geojson')
 
 
-# speedcams in pomorskie
+# 2. speedcams in pomorskie
 to_geo_json_points(
     cursor=db.speedcam.find({
         'loc': {
@@ -59,7 +59,7 @@ to_geo_json_points(
     json_name='speed_cams_pomorskie.geojson')
 
 
-# speedcams route
+# 3. speedcams route
 to_geo_json_points(
     cursor=db.speedcam.find({
         'loc': {'$geoIntersects':
@@ -77,9 +77,47 @@ to_geo_json_points(
     json_name='speed_cams_route.geojson')
 
 
-# speedcams near Warsaw but not in warsaw center 4km < center < 20km
+# 4. speedcams near Warsaw but not in warsaw center 4km < center < 20km
 to_geo_json_points(
     cursor=db.speedcam.find({
         'loc': {
             '$near': {'$geometry': {'type': "Point", 'coordinates': [52.232728, 21.010382]}, '$maxDistance': 20000, '$minDistance': 4000}}}),
     json_name='speed_cams_around_center_of_warsaw.geojson')
+
+
+# 5. speedcams 15 around polish seaside
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {
+            '$near': {
+                '$geometry': {
+                    'type': "Point",
+                    'coordinates': [55.634283, 15.403922]
+                }
+            }
+        }
+    }).limit(15),
+    json_name='speed_cams_near_seaside.geojson')
+
+
+# 6. speedcams around pomorskie
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {
+            '$geoWithin': {
+                '$geometry': {
+                    'type': "Polygon",
+                    'coordinates': [
+                        [
+                            [54.570489, 16.702425],
+                            [54.950828, 19.201752],
+                            [53.611260, 19.310739],
+                            [53.611260, 16.893747],
+                            [54.570489, 16.702425]
+                        ]
+                    ]
+                }
+            }
+        }
+    }),
+    json_name='speed_cams_around_pomorskie.geojson')
