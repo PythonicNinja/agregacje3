@@ -227,10 +227,11 @@ file.close()
 
 AGREGACJE GEOJSON:
 
-1. Fotoradary w okolicy 20 km od Gdańska
+1. fotoradary w Polszy:
+
 	
-	>> db.speedcam.find({loc: {$near: {$geometry: {type: "Point", coordinates: [54.349683, 18.643335]}, $maxDistance: 20000}}})
 	
+
 	
 	
 
