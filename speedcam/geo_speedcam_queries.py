@@ -129,3 +129,9 @@ to_geo_json_points(
         'loc': {
             '$near': {'$geometry': {'type': "Point", 'coordinates': [50.059441, 19.940328]}}}}).limit(100),
     json_name='speed_cams_around_krakow.geojson')
+
+
+# 8. speedcams all in poland
+to_geo_json_points(
+    cursor=db.speedcam.find(),
+    json_name='speed_cams_poland.geojson')
