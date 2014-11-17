@@ -75,5 +75,5 @@ to_geo_json_points(
         }
     }),
     json_name='speed_cams_route.geojson',
-    type="LineString"
+    type="Line"
 )
