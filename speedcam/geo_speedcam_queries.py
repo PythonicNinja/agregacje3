@@ -34,5 +34,5 @@ to_geo_json_points(
     cursor=db.speedcam.find({
         'loc': {
             '$near': {'$geometry': {'type': "Point", 'coordinates': [54.349683, 18.643335]}, '$maxDistance': 20000}}}),
-    json_name='speed_cams_near_gdansk.json')
+    json_name='speed_cams_near_gdansk.geojson')
 
