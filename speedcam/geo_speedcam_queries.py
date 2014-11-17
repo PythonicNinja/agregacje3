@@ -19,7 +19,7 @@ def to_geo_json_points(cursor, json_name):
                     {
                         "_id": str(point.get('speed')) + " " + str(point.get('loc')),
                         "type": "Point",
-                        "coordinates": [(point.get('loc'))]
+                        "coordinates": (point.get('loc'))
                     },
                 "properties": {"prop0": "value0"}
             } for point in cursor
