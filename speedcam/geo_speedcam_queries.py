@@ -121,3 +121,11 @@ to_geo_json_points(
         }
     }),
     json_name='speed_cams_around_pomorskie.geojson')
+
+
+# 7. speedcams near Karkow < 100
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {
+            '$near': {'$geometry': {'type': "Point", 'coordinates': [50.059441, 19.940328]}}}}).limit(100),
+    json_name='speed_cams_around_krakow.geojson')
