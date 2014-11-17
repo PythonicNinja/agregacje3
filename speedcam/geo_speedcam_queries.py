@@ -19,7 +19,7 @@ def to_geo_json_points(cursor, json_name):
                     {
                         "_id": str(point.get('speed')) + " " + str(point.get('loc')),
                         "type": "Point",
-                        "coordinates": [point.get('loc')[1],point.get('loc')[0]]
+                        "coordinates": [point.get('loc')[1], point.get('loc')[0]]
                     }
             } for point in cursor
         ]
@@ -35,3 +35,26 @@ to_geo_json_points(
             '$near': {'$geometry': {'type': "Point", 'coordinates': [54.349683, 18.643335]}, '$maxDistance': 20000}}}),
     json_name='speed_cams_near_gdansk.geojson')
 
+
+
+# speedcams in pomorskie
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {
+            '$geoIntersects': {
+                '$geometry': {
+                    'type': "Polygon",
+                    'coordinates': [
+                        [
+                            [54.570489, 16.702425],
+                            [54.950828, 19.201752],
+                            [53.611260, 19.310739],
+                            [53.611260, 16.893747],
+                            [54.570489, 16.702425]
+                        ]
+                    ]
+                }
+            }
+        }
+    }),
+    json_name='speed_cams_pomorskie.geojson')
