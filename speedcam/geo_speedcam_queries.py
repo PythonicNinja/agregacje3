@@ -75,3 +75,11 @@ to_geo_json_points(
         }
     }),
     json_name='speed_cams_route.geojson')
+
+
+# speedcams near Warsaw but not in warsaw center 4km < center < 20km
+to_geo_json_points(
+    cursor=db.speedcam.find({
+        'loc': {
+            '$near': {'$geometry': {'type': "Point", 'coordinates': [52.232728, 21.010382]}, '$maxDistance': 20000, '$minDistance': 4000}}}),
+    json_name='speed_cams_around_center_of_warsaw.geojson')
