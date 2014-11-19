@@ -1,3 +1,29 @@
+- [Wojciech Nowak](#)
+			- [Sprzęt:](#)
+			- [Wersje oprogramowania:](#)
+- [Zadania 1](#)
+		- [Zadanie 1a](#)
+				- [możemy na nowo wywołać import 2.6](#)
+				- [możemy na nowo wywołać import 2.8.0-rc0](#)
+			- [teraz 2.8.0-rc0 z włączonym WiredTiger](#)
+		- [Mongo.db imports](#)
+		- [Zadanie 1b](#)
+			- [Zadanie 1c](#)
+			- [Zadanie 1d](#)
+- [Zadanie 2](#)
+		- [Agregacja 1](#)
+			- [JS](#)
+			- [Python](#)
+		- [Agregacja 2](#)
+			- [JS](#)
+			- [Python](#)
+		- [Agregacja 3](#)
+			- [JS](#)
+			- [Python](#)
+		- [Agregacja 4](#)
+			- [JS](#)
+			- [Python](#)
+
 # Wojciech Nowak 
 * nr albumu 206354 Informatyka I rok Magisterskie
 
@@ -33,7 +59,7 @@
        2.7.8
 
 
-#Zadania
+#Zadania 1
 
 ###Zadanie 1a 
 Polega na zaimportowaniu, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
