@@ -1,4 +1,4 @@
-**Table of Contents**  *vojtek.nowak@gmail.com*
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Wojciech Nowak](#)
 			- [Sprzęt:](#)
