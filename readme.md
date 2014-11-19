@@ -118,30 +118,29 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 
 ######2.8.0-rc0 + WiredTiger
     
-    instalacja WiredTiger [install.html](http://source.wiredtiger.com/1.4.2/install.html)	
+instalacja WiredTiger [install.html](http://source.wiredtiger.com/1.4.2/install.html)	
     
-    uruchomienie mongo z storageEngine jako WiredTiger.
+uruchomienie mongo z storageEngine jako WiredTiger.
+
     >>mongod --storageEngine wiredtiger
     
-
     >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-19T18:30:10.829+0100	imported 6034196 documents
-
     real	4m19.000s
     user	5m57.282s
     sys	1m2.356s
     
-    Jak widać projekt jest bardzo ciekawy i przyszłościowy, swój udział w tym storageEngine mają najwięksi gracze:
-        * Google
-            api/leveldb/leveldb/*	Google, Inc.
-            src/support/hash_city.c	Google, Inc.
-        * Facebook
-            api/leveldb/rocksdb/*	Facebook, Inc.
-        * University of Berkley
-            src/utilities/util_getopt.c	University of California, Berkeley
-            
-    Wizja lepszego wykorzystania zasobów procesora jest na tyle kusząca, że Dr Michael Cahill (główny twórca)
-        "raised over US$30 million from investors including Intel Capital and JP Morgan during his three year tenure"
+Jak widać projekt jest bardzo ciekawy i przyszłościowy, swój udział w tym storageEngine mają najwięksi gracze:
+    * Google
+        api/leveldb/leveldb/*	Google, Inc.
+        src/support/hash_city.c	Google, Inc.
+    * Facebook
+        api/leveldb/rocksdb/*	Facebook, Inc.
+    * University of Berkley
+        src/utilities/util_getopt.c	University of California, Berkeley
+        
+Wizja lepszego wykorzystania zasobów procesora jest na tyle kusząca, że Dr Michael Cahill (główny twórca)
+    "raised over US$30 million from investors including Intel Capital and JP Morgan during his three year tenure"
 
 
 ![Alt text](import/images/2.8.0-rc0WiredTiger.png)
