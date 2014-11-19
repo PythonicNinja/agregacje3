@@ -1,32 +1,32 @@
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Wojciech Nowak](#)
-			- [Sprzęt:](#)
-			- [Wersje oprogramowania:](#)
-- [Zadania 1](#)
-		- [Zadanie 1a](#)
-			- [MongoDB](#)
-					- [możemy na nowo wywołać import 2.6](#)
-					- [możemy na nowo wywołać import 2.8.0-rc0](#)
-					- [teraz 2.8.0-rc0 z włączonym WiredTiger](#)
-					- [Mongo.db imports](#)
-			- [PostgreSQL](#)
-		- [Zadanie 1b](#)
-			- [Zadanie 1c](#)
-			- [Zadanie 1d](#)
-- [Zadanie 2](#)
-		- [Agregacja 1](#)
-			- [JS](#)
-			- [Python](#)
+- [Wojciech Nowak](#author)
+			- [Sprzęt:](#hardware)
+			- [Wersje oprogramowania:](#software)
+- [Zadania 1](#task1)
+		- [Zadanie 1a](#task1a)
+			- [MongoDB](#importmongo)
+					- [możemy na nowo wywołać import 2.6](#importmongo26)
+					- [możemy na nowo wywołać import 2.8.0-rc0](#importmongo28)
+					- [teraz 2.8.0-rc0 z włączonym WiredTiger](#importmongo28Tiger)
+					- [Mongo.db imports](#importMongoSummary)
+			- [PostgreSQL](#importPSQL)
+		- [Zadanie 1b](#task1b)
+        - [Zadanie 1c](#task1c)
+        - [Zadanie 1d](#task1d)
+- [Zadanie 2](#task2)
+		- [Agregacja 1](#task2.1)
+			- [JS](#task2.1.js)
+			- [Python](#task2.1.python)
 		- [Agregacja 2](#)
-			- [JS](#)
-			- [Python](#)
+            - [JS](#task2.2.js)
+            - [Python](#task2.2.python)
 		- [Agregacja 3](#)
-			- [JS](#)
-			- [Python](#)
+			- [JS](#task2.3.js)
+			- [Python](#task2.3.python)
 		- [Agregacja 4](#)
-			- [JS](#)
-			- [Python](#)
+			- [JS](#task2.4.js)
+			- [Python](#task2.4.python)
 
 # Wojciech Nowak 
 * nr albumu 206354 Informatyka I rok Magisterskie
@@ -185,7 +185,7 @@ Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_1
 	> db.Train.count()
 	6034196
 	
-####Zadanie 1c
+###Zadanie 1c
 Zamiana formatu danych.) Zamienić string zawierający tagi na tablicę napisów z tagami następnie zliczyć wszystkie tagi i wszystkie różne tagi.
 	
 	>>time python3 tags_to_list_v0.py 
@@ -215,7 +215,7 @@ Uznałem, że da się dużo lepiej używając greenletów:
 |-----------------------|:------------------:|
 | 71m5.795s             | 32m16.310s         |
 
-####Zadanie 1d
+###Zadanie 1d
 Zadanie 1d. Wyszukać w sieci dane zawierające obiekty GeoJSON. Następnie dane zapisać w bazie MongoDB.
 
 Szukając danych geojson, natrafiłem na bazę punktów poi. Postanowiłem zanalizować rejestratory w polsce.
