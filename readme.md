@@ -100,11 +100,12 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 
 ######Mongo.db imports
 
+![Alt text](import/images/cpuPeek.png)
+
 
 | 2.6       | 2.8.0-rc0 | 2.8.0-rc0 with WiredTiger |
 |-----------|:---------:|--------------------------:|
 | 7m52.488s | 6m49.952s |                 4m19.000s |
-
     
 
 ####PostgreSQL
