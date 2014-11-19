@@ -1,29 +1,3 @@
-- [Wojciech Nowak](#)
-			- [Sprzęt:](#)
-			- [Wersje oprogramowania:](#)
-- [Zadania 1](#)
-		- [Zadanie 1a](#)
-				- [możemy na nowo wywołać import 2.6](#)
-				- [możemy na nowo wywołać import 2.8.0-rc0](#)
-			- [teraz 2.8.0-rc0 z włączonym WiredTiger](#)
-		- [Mongo.db imports](#)
-		- [Zadanie 1b](#)
-			- [Zadanie 1c](#)
-			- [Zadanie 1d](#)
-- [Zadanie 2](#)
-		- [Agregacja 1](#)
-			- [JS](#)
-			- [Python](#)
-		- [Agregacja 2](#)
-			- [JS](#)
-			- [Python](#)
-		- [Agregacja 3](#)
-			- [JS](#)
-			- [Python](#)
-		- [Agregacja 4](#)
-			- [JS](#)
-			- [Python](#)
-
 # Wojciech Nowak 
 * nr albumu 206354 Informatyka I rok Magisterskie
 
@@ -64,7 +38,7 @@
 ###Zadanie 1a 
 Polega na zaimportowaniu, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
 
-*	MongoDB
+####MongoDB
 
 komenda:
 
@@ -86,7 +60,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	37m9.401s
 	sys		0m38.146s
 	
-#####możemy na nowo wywołać import 2.6
+######możemy na nowo wywołać import 2.6
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	connected to: 127.0.0.1
@@ -101,7 +75,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	2m25.171s
 	sys	0m26.896s
 	
-#####możemy na nowo wywołać import 2.8.0-rc0
+######możemy na nowo wywołać import 2.8.0-rc0
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-17T01:45:04.590+0100	imported 6034196 documents
@@ -111,7 +85,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	sys	0m53.392s
 	
 	
-####teraz 2.8.0-rc0 z włączonym WiredTiger
+######teraz 2.8.0-rc0 z włączonym WiredTiger
 
     >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-19T18:30:10.829+0100	imported 6034196 documents
@@ -124,7 +98,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 ![Alt text](import/images/2.8.0-rc0WiredTiger.png)
 
 
-###Mongo.db imports
+######Mongo.db imports
 
 
 | 2.6       | 2.8.0-rc0 | 2.8.0-rc0 with WiredTiger |
@@ -133,7 +107,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 
     
 
-*	PostgreSQL
+####PostgreSQL
 
 najpierw użyjemy exportu z mongo do json'a
 
