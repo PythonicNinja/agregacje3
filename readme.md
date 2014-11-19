@@ -1,9 +1,9 @@
 **Spis treści**
 
 
-- [Wojciech Nowak](#author)
-    - [Sprzęt:](#hardware)
-    - [Wersje oprogramowania:](#software)
+- [Wojciech Nowak](#wojciech-nowak)
+    - [Sprzęt](#sprzet)
+    - [Wersje oprogramowania](#wersje-oprogramowania)
 - [Zadania 1](#task1)
     - [Zadanie 1a](#task1a)
         - [MongoDB](#importmongo)
@@ -19,10 +19,10 @@
     - [Agregacja 1](#task2.1)
         - [JS](#task2.1.js)
         - [Python](#task2.1.python)
-    - [Agregacja 2](##task2.2)
+    - [Agregacja 2](#task2.2)
         - [JS](#task2.2.js)
         - [Python](#task2.2.python)
-    - [Agregacja 3](##task2.3)
+    - [Agregacja 3](#task2.3)
         - [JS](#task2.3.js)
         - [Python](#task2.3.python)
     - [Agregacja 4](#task2.4)
@@ -32,7 +32,7 @@
 # Wojciech Nowak 
 * nr albumu 206354 Informatyka I rok Magisterskie
 
-####Sprzęt:
+####Sprzęt
 * procesor: 
 
 		Model:								  Intel Core i7-4650U
@@ -52,7 +52,7 @@
 		model: 			SSD Samsung sm0256f 
 		magistrala:		PCIe SSD
 		
-####Wersje oprogramowania:
+####Wersje oprogramowania
 * MongoDB shell version: 	
         2.8.0-rc0
         2.6
