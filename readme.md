@@ -22,9 +22,15 @@
 		magistrala:		PCIe SSD
 		
 ####Wersje oprogramowania:
-* MongoDB shell version: 	2.8.0-rc0
+* MongoDB shell version: 	
+        2.8.0-rc0
+        2.6
+* WiredTiger: 	            1.4.2
 * Postgresql version: 		9.3.5
 * OS: Mac OS X 				10.10 (14A389)
+* Python:
+       3.4.2
+       2.7.8
 
 
 #Zadania
@@ -54,7 +60,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	37m9.401s
 	sys		0m38.146s
 	
-możemy na nowo wywołać import 2.6
+#####możemy na nowo wywołać import 2.6
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	connected to: 127.0.0.1
@@ -69,7 +75,7 @@ możemy na nowo wywołać import 2.6
 	user	2m25.171s
 	sys	0m26.896s
 	
-możemy na nowo wywołać import 2.8.0-rc0
+#####możemy na nowo wywołać import 2.8.0-rc0
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-17T01:45:04.590+0100	imported 6034196 documents
@@ -77,6 +83,29 @@ możemy na nowo wywołać import 2.8.0-rc0
 	real	6m49.952s
 	user	6m16.081s
 	sys	0m53.392s
+	
+	
+####teraz 2.8.0-rc0 z włączonym WiredTiger
+
+    >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
+	2014-11-19T18:30:10.829+0100	imported 6034196 documents
+
+    real	4m19.000s
+    user	5m57.282s
+    sys	1m2.356s
+
+
+![Alt text](import/images/2.8.0-rc0WiredTiger.png)
+
+
+###Mongo.db imports
+
+
+| 2.6       | 2.8.0-rc0 | 2.8.0-rc0 with WiredTiger |
+|-----------|:---------:|--------------------------:|
+| 7m52.488s | 6m49.952s |                 4m19.000s |
+
+    
 
 *	PostgreSQL
 
@@ -109,6 +138,8 @@ tworzymy tabele
 	);
 
 import w pythonie z mongodb -> postgresa:
+
+[python script](import/mongo2postgres.py)	
 	
 	>> time python mongo2postgres.py
 	real	68m41.412s
@@ -133,6 +164,10 @@ Zamiana formatu danych.) Zamienić string zawierający tagi na tablicę napisów
 	real    71m5.795s
 	user    47m8.053s
 	sys     3m53.134s
+
+[slow version Link](import/tags_to_list_v0.py)	
+	
+Zbyt wolno :(, dodatkowo robiłem budowanie słownika ale głównym spowolnieniem było nie zastosowanie zrównolegniania.
 	
 Uznałem, że da się dużo lepiej używając greenletów:
 
@@ -141,6 +176,11 @@ Uznałem, że da się dużo lepiej używając greenletów:
 	user    9m25.584s
 	sys     0m57.192s
 
+[greenlet Link](import/tags_to_list_v1.py)
+
+| tags_to_list_v0       | tags_to_list_v1.py |
+|-----------------------|:------------------:|
+| 71m5.795s             | 32m16.310s         |
 
 ####Zadanie 1d
 Zadanie 1d. Wyszukać w sieci dane zawierające obiekty GeoJSON. Następnie dane zapisać w bazie MongoDB.
@@ -227,7 +267,7 @@ file.close()
 
 AGREGACJE GEOJSON:
 
-Napisałem skrypt w pythonie generujący geojsony dla zapytania do bazy mongodb:
+Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojsony dla zapytania do bazy mongodb:
 
 	def to_geo_json_points(cursor, json_name, type="Point"):
     	geo_json = {
@@ -353,10 +393,314 @@ Napisałem skrypt w pythonie generujący geojsony dla zapytania do bazy mongodb:
 	    }).limit(15),
     	json_name='speed_cams_near_seaside.geojson')
 	
+#Zadanie 2
+
+dane pochodzą z [http://data.police.uk/data/ 
+](http://data.police.uk/data/) z ostatniego roku tzn. 09.2013 - 09.2014
+
+połączenie csv
+
+	>> cat 201*/*.csv >merged.csv
+
+zakładana liczba rekordów
+
+	>>cat merged.csv | wc -l
+	10 277 390
+	
+import do bazy mongodb
+
+	>> time mongoimport --type csv -c crime --file merged.csv --headerline
+	2014-11-19T03:29:58.883+0100	imported 10277389 documents
+
+	real	4m47.820s
+	user	8m29.818s
+	sys		1m2.077s
+	
+test ilości
+
+	>> db.crime.count()
+	10277389
+	
+przykładowy wpis:
+
+	>> > db.crime.findOne()
+	{
+	"_id" : ObjectId("546bff87fe4798e24132403f"),
+	"Crime ID" : "15939afdf6964e9edea28bb0ba7aa3cb684fe879726910bf03945b3f8ceb85a3",
+	"Month" : "2013-09",
+	"Reported by" : "Avon and Somerset Constabulary",
+	"Falls within" : "Avon and Somerset Constabulary",
+	"Longitude" : "",
+	"Latitude" : "",
+	"Location" : "No location",
+	"LSOA code" : "",
+	"LSOA name" : "",
+	"Outcome type" : "Suspect charged as part of another case"
+	}
+
+###Agregacja 1
+ilość zakończeń przestępstwa w danym typie.
+	
+	
+####JS	
+		>>db.crime.aggregate(
+        	[
+    	        {
+	                '$group': {
+                	    '_id':  "$Outcome type",
+            	        'count': {'$sum': 1}
+        	        }
+    	        },
+	            {
+                	'$sort': {'count': -1}
+            	}
+        	])
+        time: 64.59 sec.
+        
+####Python 
+skrypt z generowaniem słownika do highcharts [link](crime/aggregation1.py)
+        >>time python aggregation1.py 
+        real    1m1.465s
+        user    0m0.070s
+        sys     0m0.067s
+
+
+
+[Interactive Chart](http://jsfiddle.net/bmrhL57u/2/)	
+![Alt text](crime/images/agg1.png)
+
+
+###Agregacja 2
+najniebezpieczniejsze lokalizacje.
 	
 
+####JS	
+		>>db.crime.aggregate(
+        	[
+    	        {
+	                '$group': {
+                	    '_id':  "$Location",
+            	        'count': {'$sum': 1}
+        	        }
+    	        },
+	            {
+                	'$sort': {'count': -1}
+            	}
+        	])
+        time: 64.59 sec.
+        
+####Python 
+skrypt z generowaniem słownika do highcharts [link](crime/aggregation2.py)
+        >>time python aggregation1.py 
+        real    1m1.465s
+        user    0m0.070s
+        sys     0m0.067s
 
 
+
+[Interactive Chart](http://jsfiddle.net/bmrhL57u/2/)	
+![Alt text](crime/images/agg1.png)        	
+        	
+###Agregacja 3
+ilość przestępstw w danym miesiącu.
+
+
+		>>db.crime.aggregate([
+        	{
+                '$group': {
+                    '_id':  "$Month",
+                    'count': {'$sum': -1}
+                }
+        	},
+		])
+		
+[
+    {
+        "_id" : "2014-09",
+        "count" : 812034
+    },
+    {
+        "_id" : "2014-06",
+        "count" : 817447
+    },
+    {
+        "_id" : "2014-07",
+        "count" : 879294
+    },
+    {
+        "_id" : "2014-05",
+        "count" : 815277
+    },
+    {
+        "_id" : "2013-12",
+        "count" : 726761
+    },
+    {
+        "_id" : "2014-03",
+        "count" : 782209
+    },
+    {
+        "_id" : "2014-04",
+        "count" : 761371
+    },
+    {
+        "_id" : "2014-01",
+        "count" : 753897
+    },
+    {
+        "_id" : "2014-08",
+        "count" : 815111
+    },
+    {
+        "_id" : "2013-10",
+        "count" : 854526
+    },
+    {
+        "_id" : "2014-02",
+        "count" : 691036
+    },
+    {
+        "_id" : "2013-09",
+        "count" : 784351
+    },
+    {
+        "_id" : "2013-11",
+        "count" : 782932
+    }
+]
+
+
+###Agregacja 4
+kiedy dawano uniewinnienie?
+
+	>>db.crime.aggregate([
+        { '$match' : { 'Outcome type' : "Offender given absolute discharge" }},
+        {
+                '$group': {
+                    '_id':  "$Month",
+                    'count': {'$sum': 1}
+                }
+        },
+        {
+            '$sort': {'count': -1}
+        }
+])
+
+
+[
+    {
+        "_id" : "2014-01",
+        "count" : 145
+    },
+    {
+        "_id" : "2014-07",
+        "count" : 136
+    },
+    {
+        "_id" : "2014-04",
+        "count" : 132
+    },
+    {
+        "_id" : "2013-10",
+        "count" : 130
+    },
+    {
+        "_id" : "2013-09",
+        "count" : 127
+    },
+    {
+        "_id" : "2013-11",
+        "count" : 127
+    },
+    {
+        "_id" : "2014-03",
+        "count" : 123
+    },
+    {
+        "_id" : "2014-08",
+        "count" : 115
+    },
+    {
+        "_id" : "2014-06",
+        "count" : 111
+    },
+    {
+        "_id" : "2014-05",
+        "count" : 103
+    },
+    {
+        "_id" : "2014-02",
+        "count" : 101
+    },
+    {
+        "_id" : "2013-12",
+        "count" : 93
+    },
+    {
+        "_id" : "2014-09",
+        "count" : 80
+    }
+]
+
+###Agregacja 5
+Uniewinnienia i ich lokalizacje
+
+	>>db.crime.aggregate([
+        { '$match' : { 'Outcome type' : "Offender given absolute discharge" }},
+        {
+                '$group': {
+                    '_id':  "$Location",
+                    'count': {'$sum': 1}
+                }
+        },
+        {
+            '$sort': {'count': -1}
+        }
+	])
+	
+	
+		[
+    {
+        "_id" : "On or near Supermarket",
+        "count" : 143
+    },
+    {
+        "_id" : "On or near Shopping Area",
+        "count" : 111
+    },
+    {
+        "_id" : "On or near Parking Area",
+        "count" : 58
+    },
+    {
+        "_id" : "On or near Petrol Station",
+        "count" : 49
+    },
+    {
+        "_id" : "No location",
+        "count" : 20
+    },
+    {
+        "_id" : "On or near Sports/Recreation Area",
+        "count" : 18
+    },
+    {
+        "_id" : "On or near Nightclub",
+        "count" : 17
+    },
+    {
+        "_id" : "On or near Pedestrian Subway",
+        "count" : 15
+    },
+    {
+        "_id" : "On or near Police Station",
+        "count" : 11
+    },
+    {
+        "_id" : "On or near NEWGATE STREET",
+        "count" : 10
+    }
+]
 
 
 
