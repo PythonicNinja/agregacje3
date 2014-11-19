@@ -131,13 +131,13 @@ uruchomienie mongo z storageEngine jako WiredTiger.
     sys	1m2.356s
     
 Jak widać projekt jest bardzo ciekawy i przyszłościowy, swój udział w tym storageEngine mają najwięksi gracze:
-    * Google
-        api/leveldb/leveldb/*	Google, Inc.
-        src/support/hash_city.c	Google, Inc.
-    * Facebook
-        api/leveldb/rocksdb/*	Facebook, Inc.
-    * University of Berkley
-        src/utilities/util_getopt.c	University of California, Berkeley
+        * Google
+            api/leveldb/leveldb/*	Google, Inc.
+            src/support/hash_city.c	Google, Inc.
+        * Facebook
+            api/leveldb/rocksdb/*	Facebook, Inc.
+        * University of Berkley
+            src/utilities/util_getopt.c	University of California, Berkeley
         
 Wizja lepszego wykorzystania zasobów procesora jest na tyle kusząca, że Dr Michael Cahill (główny twórca)
     "raised over US$30 million from investors including Intel Capital and JP Morgan during his three year tenure"
