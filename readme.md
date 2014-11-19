@@ -2,14 +2,14 @@
 
 
 - [Wojciech Nowak](#wojciech-nowak)
-    - [Sprzęt](#sprz%C4%99t)
+    - [Sprzęt](#sprzęt)
     - [Wersje oprogramowania](#wersje-oprogramowania)
 - [Zadania 1](#zadania-1)
     - [Zadanie 1a](#zadanie-1a)
         - [MongoDB](#mongodb)
-            - [2.6](#mo%C5%BCemy-na-nowo-wywo%C5%82a%C4%87-import-26)
-            - [2.8.0-rc0](#mo%C5%BCemy-na-nowo-wywo%C5%82a%C4%87-import-280-rc0)
-            - [2.8.0-rc0 z WiredTiger](#teraz-280-rc0-z-w%C5%82%C4%85czonym-wiredtiger)
+            - [2.6](#możemy-na-nowo-wywołać-import-26)
+            - [2.8.0-rc0](#możemy-na-nowo-wywołać-import-280-rc0)
+            - [2.8.0-rc0 z WiredTiger](#teraz-280-rc0-z-włączonym-wiredtiger)
             - [summary](#mongodb-imports)
         - [PostgreSQL](#postgresql)
     - [Zadanie 1b](#zadanie-1b)
