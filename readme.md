@@ -117,6 +117,12 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	
 
 ######2.8.0-rc0 + WiredTiger
+    
+    instalacja WiredTiger [install.html](http://source.wiredtiger.com/1.4.2/install.html)	
+    
+    uruchomienie mongo z storageEngine jako WiredTiger.
+    >>mongod --storageEngine wiredtiger
+    
 
     >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-19T18:30:10.829+0100	imported 6034196 documents
@@ -124,6 +130,18 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
     real	4m19.000s
     user	5m57.282s
     sys	1m2.356s
+    
+    Jak widać projekt jest bardzo ciekawy i przyszłościowy, swój udział w tym storageEngine mają najwięksi gracze:
+        * Google
+            api/leveldb/leveldb/*	Google, Inc.
+            src/support/hash_city.c	Google, Inc.
+        * Facebook
+            api/leveldb/rocksdb/*	Facebook, Inc.
+        * University of Berkley
+            src/utilities/util_getopt.c	University of California, Berkeley
+            
+    Wizja lepszego wykorzystania zasobów procesora jest na tyle kusząca, że Dr Michael Cahill (główny twórca)
+        "raised over US$30 million from investors including Intel Capital and JP Morgan during his three year tenure"
 
 
 ![Alt text](import/images/2.8.0-rc0WiredTiger.png)
@@ -198,6 +216,7 @@ Zamiana formatu danych.) Zamienić string zawierający tagi na tablicę napisów
 	sys     3m53.134s
 
 [slow version Link](import/tags_to_list_v0.py)
+
 ![Alt text](import/images/lowCPU.png)
 	
 Zbyt wolno :(, dodatkowo robiłem budowanie słownika ale głównym spowolnieniem było nie zastosowanie zrównolegniania.
@@ -210,6 +229,7 @@ Uznałem, że da się dużo lepiej używając greenletów:
 	sys     0m57.192s
 
 [greenlet Link](import/tags_to_list_v1.py)
+
 ![Alt text](import/images/highCPU.png)
 
 | tags_to_list_v0       | tags_to_list_v1.py |
@@ -220,6 +240,7 @@ Uznałem, że da się dużo lepiej używając greenletów:
 Zadanie 1d. Wyszukać w sieci dane zawierające obiekty GeoJSON. Następnie dane zapisać w bazie MongoDB.
 
 Szukając danych geojson, natrafiłem na bazę punktów poi. Postanowiłem zanalizować rejestratory w polsce.
+
 [link do pliku](http://www.poiplaza.com/download/zipfiles/1424/PL-FixSpeedcam_mio_moov.zip)
 
 	
@@ -323,7 +344,9 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
         json.dump(geo_json, out_json)
 
 1. fotoradary w całej Polsce.
+
 	[Link](speedcam/speed_cams_poland.geojson)
+	
 	![Alt text](speedcam/images/polsza.png)
 	
 		>> to_geo_json_points(
@@ -331,6 +354,7 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
     	json_name='speed_cams_poland.geojson')	
     	    	
 2. fotoradary w okolicy Gdańska.
+
 	[Link](speedcam/speed_cams_near_gdansk.geojson)
 	
 	![Alt text](speedcam/images/near_gdansk.png)
@@ -343,7 +367,9 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
 
     	
 3. fotoradary w Pomorskim.
+
 	[Link](speedcam/speed_cams_pomorskie.geojson)
+	
 	![Alt text](speedcam/images/pomorskie.png)
 	
 		>> to_geo_json_points(
@@ -366,7 +392,8 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
         }
 	    }),
     	json_name='speed_cams_pomorskie.geojson')	
-4. speedcams near Karkow < 100
+4. fotoradary w okolicy Karkowa < 100km
+
 	[Link](speedcam/speed_cams_around_krakow.geojson)
 	
 	![Alt text](speedcam/images/100_around_krakow.png)
@@ -378,6 +405,7 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
     	json_name='speed_cams_around_krakow.geojson')    	
     	
 5. fotoradary w na drodze.
+
 	[Link](speedcam/speed_cams_route.geojson)  
 
 		>>to_geo_json_points(
@@ -397,7 +425,7 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
 		    json_name='speed_cams_route.geojson')
 
 
-6. speedcams near Warsaw but not in warsaw center 4km < center < 20km
+6. fotoradary near Warsaw but not in warsaw center 4km < center < 20km
 	[Link](speedcam/speed_cams_around_center_of_warsaw.geojson)
 	
 	![Alt text](speedcam/images/around_warsaw.png)
@@ -409,7 +437,7 @@ Napisałem skrypt [Link](speedcam/csv2geojson.py) w pythonie generujący geojson
     	json_name='speed_cams_around_center_of_warsaw.geojson')
 
 
-7. speedcams 15 around polish seaside
+7. fotoradary 15 around polish seaside
 	[Link](speedcam/speed_cams_near_seaside.geojson)
 	
 	![Alt text](speedcam/images/near_seaside.png)
