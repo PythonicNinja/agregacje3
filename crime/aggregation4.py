@@ -70,17 +70,21 @@ def to_highcharts(cursor, json_name):
     with open(json_name, 'w') as out_file:
         json.dump(out_json, out_file)
 
-# ilość przestępstw w danym miesiącu.
+#Uniewinnienia i ich lokalizacje
 to_highcharts(
     cursor=db.crime.aggregate([
+        { '$match' : { 'Outcome type' : "Offender given absolute discharge" }},
         {
-            '$group': {
-                '_id': "$Month",
-                'count': {'$sum': 1}
-            }
+                '$group': {
+                    '_id':  "$Location",
+                    'count': {'$sum': 1}
+                }
         },
         {
             '$sort': {'count': -1}
+        },
+        {
+            '$limit': 10
         }
-    ])['result'],
-    json_name='aggregation2.json')
+	    ])['result'],
+    json_name='aggregation4.json')

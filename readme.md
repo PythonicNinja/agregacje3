@@ -459,60 +459,48 @@ ilość zakończeń przestępstwa w danym typie.
         
 ####Python 
 skrypt z generowaniem słownika do highcharts [link](crime/aggregation1.py)
+
+
         >>time python aggregation1.py 
         real    1m1.465s
         user    0m0.070s
         sys     0m0.067s
-
 
 
 [Interactive Chart](http://jsfiddle.net/bmrhL57u/2/)	
 ![Alt text](crime/images/agg1.png)
 
-
-###Agregacja 2
-najniebezpieczniejsze lokalizacje.
-	
-
-####JS	
-		>>db.crime.aggregate(
-        	[
-    	        {
-	                '$group': {
-                	    '_id':  "$Location",
-            	        'count': {'$sum': 1}
-        	        }
-    	        },
-	            {
-                	'$sort': {'count': -1}
-            	}
-        	])
-        time: 64.59 sec.
-        
-####Python 
-skrypt z generowaniem słownika do highcharts [link](crime/aggregation2.py)
-        >>time python aggregation1.py 
-        real    1m1.465s
-        user    0m0.070s
-        sys     0m0.067s
-
-
-
-[Interactive Chart](http://jsfiddle.net/bmrhL57u/2/)	
-![Alt text](crime/images/agg1.png)        	
         	
-###Agregacja 3
+###Agregacja 2
 ilość przestępstw w danym miesiącu.
 
-
-		>>db.crime.aggregate([
+####JS	
+		>>>>db.crime.aggregate([
         	{
                 '$group': {
                     '_id':  "$Month",
-                    'count': {'$sum': -1}
+                    'count': {'$sum': 1}
                 }
         	},
+            {
+                '$sort': {'count': -1}
+            }
 		])
+        time: 56.883 sec.
+        
+####Python 
+skrypt z generowaniem słownika do highcharts [link](crime/aggregation2.py)
+
+
+        >>time python aggregation2.py 
+        real    0m57.950s
+        user    0m0.076s
+        sys     0m0.067s
+
+
+[Interactive Chart](http://jsfiddle.net/bmrhL57u/3/)	
+![Alt text](crime/images/agg2.png)
+		
 		
 [
     {
@@ -570,10 +558,11 @@ ilość przestępstw w danym miesiącu.
 ]
 
 
-###Agregacja 4
+###Agregacja 3
 kiedy dawano uniewinnienie?
 
-	>>db.crime.aggregate([
+####JS	
+		>>db.crime.aggregate([
         { '$match' : { 'Outcome type' : "Offender given absolute discharge" }},
         {
                 '$group': {
@@ -584,8 +573,20 @@ kiedy dawano uniewinnienie?
         {
             '$sort': {'count': -1}
         }
-])
+        ])
+        time: 48.487 sec.
+        
+####Python 
+skrypt z generowaniem słownika do highcharts [link](crime/aggregation3.py)
 
+
+        >>time python aggregation3.py 
+        real    0m51.672s
+        user    0m0.078s
+        sys     0m0.069s
+
+[Interactive Chart](http://jsfiddle.net/bmrhL57u/4/)	
+![Alt text](crime/images/agg3.png)
 
 [
     {
@@ -642,10 +643,11 @@ kiedy dawano uniewinnienie?
     }
 ]
 
-###Agregacja 5
+###Agregacja 4
 Uniewinnienia i ich lokalizacje
 
-	>>db.crime.aggregate([
+####JS	
+		>>db.crime.aggregate([
         { '$match' : { 'Outcome type' : "Offender given absolute discharge" }},
         {
                 '$group': {
@@ -655,9 +657,25 @@ Uniewinnienia i ich lokalizacje
         },
         {
             '$sort': {'count': -1}
+        },
+        {
+            '$limit': 10
         }
-	])
+	    ])
+        time: 49.382 sec.
+        
+####Python 
+skrypt z generowaniem słownika do highcharts [link](crime/aggregation4.py)
+
+
+        >>time python aggregation4.py 
+        real    0m49.514s
+        user    0m0.078s
+        sys     0m0.082s
+
 	
+[Interactive Chart](http://jsfiddle.net/bmrhL57u/5/)	
+![Alt text](crime/images/agg4.png)
 	
 		[
     {
