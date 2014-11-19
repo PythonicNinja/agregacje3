@@ -84,7 +84,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	6m16.081s
 	sys	0m53.392s
 	
-	
+
 ######teraz 2.8.0-rc0 z włączonym WiredTiger
 
     >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
@@ -165,7 +165,8 @@ Zamiana formatu danych.) Zamienić string zawierający tagi na tablicę napisów
 	user    47m8.053s
 	sys     3m53.134s
 
-[slow version Link](import/tags_to_list_v0.py)	
+[slow version Link](import/tags_to_list_v0.py)
+![Alt text](import/images/lowCPU.png)
 	
 Zbyt wolno :(, dodatkowo robiłem budowanie słownika ale głównym spowolnieniem było nie zastosowanie zrównolegniania.
 	
@@ -177,6 +178,7 @@ Uznałem, że da się dużo lepiej używając greenletów:
 	sys     0m57.192s
 
 [greenlet Link](import/tags_to_list_v1.py)
+![Alt text](import/images/highCPU.png)
 
 | tags_to_list_v0       | tags_to_list_v1.py |
 |-----------------------|:------------------:|
