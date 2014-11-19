@@ -7,9 +7,9 @@
 - [Zadania 1](#zadania-1)
     - [Zadanie 1a](#zadanie-1a)
         - [MongoDB](#mongodb)
-            - [2.6](#możemy-na-nowo-wywołać-import-26)
-            - [2.8.0-rc0](#możemy-na-nowo-wywołać-import-280-rc0)
-            - [2.8.0-rc0 z WiredTiger](#teraz-280-rc0-z-włączonym-wiredtiger)
+            - [2.6](#import-26)
+            - [2.8.0-rc0](#import-280-rc0)
+            - [2.8.0-rc0 z WiredTiger](#import-280-rc0-wiredtiger)
             - [summary](#mongodb-imports)
         - [PostgreSQL](#postgresql)
     - [Zadanie 1b](#zadanie-1b)
@@ -91,7 +91,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	37m9.401s
 	sys		0m38.146s
 	
-######możemy na nowo wywołać import 2.6
+######import 2.6
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	connected to: 127.0.0.1
@@ -106,7 +106,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	user	2m25.171s
 	sys	0m26.896s
 	
-######możemy na nowo wywołać import 2.8.0-rc0
+######import 2.8.0-rc0
 	
 	>>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-17T01:45:04.590+0100	imported 6034196 documents
@@ -116,7 +116,7 @@ po krótkiej analizie co jest problemem, dochodzimy do wniosku, że należy usun
 	sys	0m53.392s
 	
 
-######teraz 2.8.0-rc0 z włączonym WiredTiger
+######2.8.0-rc0 + WiredTiger
 
     >>time mongoimport --type csv -c Train --file Train_prepared_for_mongoimport.csv --headerline
 	2014-11-19T18:30:10.829+0100	imported 6034196 documents
